@@ -1,8 +1,18 @@
+const http = require('http');
+const fs = require('fs');
 const WebSocket = require('ws');
-const wss = new WebSocket.Server({ port: 8080 });
 
-let robots = {}; // { playerId: ws }
-let clients = {}; // { clientId: ws }
+// HTTP server (optional, mainly for testing)
+const server = http.createServer((req, res) => {
+  res.writeHead(200);
+  res.end("WebSocket server for CTF Remote");
+});
+
+// WebSocket server
+const wss = new WebSocket.Server({ server });
+
+let robots = {};
+let clients = {};
 
 wss.on('connection', (ws) => {
   ws.on('message', (msg) => {
@@ -10,21 +20,18 @@ wss.on('connection', (ws) => {
       const data = JSON.parse(msg);
 
       if (data.type === 'register') {
-        // Register client or robot
         if (data.role === 'robot') robots[data.id] = ws;
         else if (data.role === 'client') clients[data.id] = ws;
       }
 
       if (data.type === 'control') {
-        // Forward control to robot
         if (robots[data.id]) {
-          robots[data.id].send(JSON.stringify({ type: 'control', vx: data.vx, wz: data.wz }));
+          robots[data.id].send(JSON.stringify({
+            type: 'control', vx: data.vx, wz: data.wz
+          }));
         }
       }
-
-    } catch (err) {
-      console.error('Error:', err);
-    }
+    } catch (err) { console.error(err); }
   });
 
   ws.on('close', () => {
@@ -33,4 +40,7 @@ wss.on('connection', (ws) => {
   });
 });
 
-console.log('WebSocket server running on ws://localhost:8080');
+const PORT = process.env.PORT || 8080;
+server.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
