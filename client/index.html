@@ -18,7 +18,7 @@
 
   <script>
     const playerId = prompt("Enter player ID (epuck1 or epuck2):");
-    const ws = new WebSocket('ws://localhost:8080');
+    const ws = new WebSocket('ws://192.168.1.5:8080');
 
     ws.onopen = () => {
       ws.send(JSON.stringify({ type: 'register', role: 'client', id: playerId }));

@@ -5,12 +5,13 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/project
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/floors/protos/RectangleArena.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/apartment_structure/protos/Wall.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/robots/gctronic/e-puck/protos/E-puck.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/geometries/protos/Rectangle.proto"
 
 WorldInfo {
 }
 Viewpoint {
-  orientation 0.5689803921718619 -0.5758817109961328 -0.5870447753486278 4.21382400732816
-  position 0.3466662137589898 -0.2455665523556997 3.3461931532194917
+  orientation 0.542896502948525 0.5409190287178987 -0.6423939534718143 2.0028843557032134
+  position -0.3338629062831951 0.9273473278763721 5.780869904077971
 }
 TexturedBackground {
 }
@@ -782,49 +783,52 @@ RectangleArena {
     }
   }
 }
-Solid {
-  translation 0.123028 0.0351176 0
-  children [
-    Shape {
-      appearance PBRAppearance {
-        baseColor 1 0 0
-        metalness 0
-      }
-      geometry Cone {
-        bottomRadius 0.05
-        height 0.1
-      }
-    }
-  ]
-}
 E-puck {
-  hidden position_0_0 668.1207410760244
-  hidden position_0_1 630.0574918876329
-  hidden linearVelocity_0 4.617778038447022e-13 -3.227752316278649e-12 -2.3211062701496606e-15
-  hidden angularVelocity_0 2.1516323561196535e-10 3.098353711879287e-11 -1.7821864997613925e-14
-  hidden rotation_1 0 1 0 2.06877676759198
-  hidden linearVelocity_1 6.133139277057354e-13 -4.303413047894276e-12 3.5529670516727487e-16
-  hidden angularVelocity_1 2.152592180467442e-10 3.02124672318931e-11 -1.7997019737691234e-14
-  hidden rotation_2 0 1 0 3.3070944294311073
-  hidden linearVelocity_2 6.200877429632601e-13 -4.303229528228323e-12 -1.065770539799671e-15
-  hidden angularVelocity_2 2.151659392748751e-10 3.088443221211366e-11 -1.9728391886138216e-14
-  translation 0.5220910463613734 -0.4087300811383827 -6.396199578092947e-05
-  rotation -8.272617818877139e-10 -8.493915710689103e-10 1 1.7126105970714405
+  hidden position_0_0 668.3215136867592
+  hidden position_0_1 630.2582644966894
+  hidden rotation_1 0 1 0 2.2695493783268224
+  hidden rotation_2 0 1 0 3.5078670384876784
+  translation 0.5421510000435461 -0.5492730003036475 -6.396199576740036e-05
+  rotation -1.9224865562537106e-09 -2.031018465011479e-11 0.9999999999999999 1.712608573807691
   name "e-puck(1)"
   controller "epuck1_controller"
 }
 E-puck {
-  hidden position_0_0 717.2642461830875
-  hidden position_0_1 731.0460156497433
-  hidden linearVelocity_0 -3.0936802002890585e-15 -1.397013356373706e-16 2.747431911605721e-15
-  hidden angularVelocity_0 2.0284379364824225e-14 -1.905571669644783e-13 3.16548140282751e-15
-  hidden rotation_1 0 -1 0 4.827833023097689
-  hidden linearVelocity_1 -7.0105122698902955e-15 -4.683397133260565e-16 -3.552712463426319e-16
-  hidden angularVelocity_1 3.859555352985327e-14 -4.014113963843775e-13 6.289070901972543e-15
-  hidden rotation_2 0 -1 0 5.22619442374639
-  hidden linearVelocity_2 -1.442021180012346e-15 -1.82282310213316e-17 1.0658144352607452e-15
-  hidden angularVelocity_2 -4.259209830011752e-15 1.8942125242937688e-13 6.460325859168886e-15
-  translation -0.42015840339428906 0.5391962289978736 -6.396199578101273e-05
-  rotation 4.0313324869419773e-10 -3.7030652927356615e-10 -1 1.4872299998438523
+  hidden position_0_0 717.4650187939585
+  hidden position_0_1 731.2467883204343
+  hidden rotation_1 0 -1 0 4.627060412226676
+  hidden rotation_2 0 -1 0 5.025421753055296
+  translation -0.5789280000035326 0.5178270000424688 -6.396199576667004e-05
+  rotation 1.4812424433501657e-10 -1.358102286428648e-10 -1 1.487232380235147
   controller "epuck2_controller"
+}
+DEF FLAG Solid {
+  translation -0.03 0 0.05
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 0.8 0 0
+        }
+      }
+      geometry Rectangle {
+        size 0.05 0.05
+      }
+    }
+    Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 1 0 0
+        }
+      }
+      geometry Cylinder {
+        height 0.1
+        radius 0.01
+      }
+    }
+  ]
+}
+Robot {
+  controller "flag_spawn_code"
+  supervisor TRUE
 }
