@@ -3,25 +3,34 @@
 <head>
   <title>CTF Remote</title>
   <style>
-    body { text-align: center; font-family: sans-serif; }
-    button { font-size: 20px; padding: 10px; margin: 5px; }
+    body { text-align: center; font-family: sans-serif; margin-top: 50px; }
+    .grid { display: grid; grid-template-columns: 100px 100px 100px; gap: 10px; justify-content: center; }
+    button { font-size: 20px; padding: 20px; border-radius: 10px; }
   </style>
 </head>
 <body>
-  <h1>Capture the Flag Remote</h1>
-  <div>
-    <button onclick="send(0.5, 0)">Forward</button><br>
-    <button onclick="send(0, 1)">Left</button>
-    <button onclick="send(0, -1)">Right</button><br>
-    <button onclick="send(0, 0)">Stop</button>
+  <h1>🚩 Capture the Flag Remote</h1>
+  <div class="grid">
+    <div></div>
+    <button onclick="send(0.5, 0)">⬆️</button>
+    <div></div>
+
+    <button onclick="send(0, 1)">⬅️</button>
+    <button onclick="send(0, 0)">⏹️</button>
+    <button onclick="send(0, -1)">➡️</button>
+
+    <div></div>
+    <button onclick="send(-0.5, 0)">⬇️</button>
+    <div></div>
   </div>
 
   <script>
     const playerId = prompt("Enter player ID (epuck1 or epuck2):");
-    const ws = new WebSocket('ws://192.168.1.5:8080');
+    const ws = new WebSocket("wss://ctf-game-d6xx.onrender.com"); // Replace after Render deploy
 
     ws.onopen = () => {
       ws.send(JSON.stringify({ type: 'register', role: 'client', id: playerId }));
+      console.log("Connected to WebSocket server");
     };
 
     function send(vx, wz) {
