@@ -3,14 +3,18 @@
 <head>
   <title>CTF Remote</title>
   <style>
-    body { text-align: center; font-family: sans-serif; margin-top: 50px; }
+    body { text-align: center; font-family: sans-serif; margin-top: 30px; }
     .grid { display: grid; grid-template-columns: 100px 100px 100px; gap: 10px; justify-content: center; }
     button { font-size: 20px; padding: 20px; border-radius: 10px; }
+    #status { margin-top: 20px; font-size: 24px; font-weight: bold; }
   </style>
 </head>
 <body>
   <h1>🚩 Capture the Flag Remote</h1>
-  <div class="grid">
+
+  <div id="status">Waiting for events...</div>
+
+  <div class="grid" style="margin-top: 20px;">
     <div></div>
     <button onclick="send(0.5, 0)">Up</button>
     <div></div>
@@ -26,11 +30,34 @@
 
   <script>
     const playerId = prompt("Enter player ID (epuck1 or epuck2):");
-    const ws = new WebSocket("wss://ctf-game-d6xx.onrender.com"); // Replace after Render deploy
+    const ws = new WebSocket("wss://ctf-game-d6xx.onrender.com");
+
+    const statusDiv = document.getElementById("status");
 
     ws.onopen = () => {
       ws.send(JSON.stringify({ type: 'register', role: 'client', id: playerId }));
       console.log("Connected to WebSocket server");
+    };
+
+    ws.onmessage = (evt) => {
+      try {
+        const data = JSON.parse(evt.data);
+        if (data.type === 'game_event') {
+          if (data.event === 'win') {
+            statusDiv.innerText = `🏆 Winner: ${data.winner.toUpperCase()}`;
+            statusDiv.style.color = "green";
+          } else if (data.event === 'tie') {
+            statusDiv.innerText = "🤝 It's a TIE!";
+            statusDiv.style.color = "orange";
+          } else {
+            statusDiv.innerText = JSON.stringify(data);
+            statusDiv.style.color = "black";
+          }
+          console.log("Game event:", data);
+        }
+      } catch (e) {
+        console.error("Invalid event data", e);
+      }
     };
 
     function send(vx, wz) {
