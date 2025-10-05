@@ -1,6 +1,7 @@
 # flag_spawn_code.py
 from controller import Supervisor
 import threading, json, time, random
+import numpy as np
 try:
     import websocket
 except Exception as e:
@@ -47,6 +48,14 @@ possible_points = [
     [0.2, -0.1, 0.05],
     [-0.2, 0.2, 0.05]
 ]
+
+initial_flag_pos = possible_points[np.random.randint(0, len(possible_points))]
+translation_field.setSFVec3f([
+    initial_flag_pos[0],
+    initial_flag_pos[1],
+    initial_flag_pos[2] if len(initial_flag_pos) >= 3 else 0.05
+])
+
 last_spawn_index = 0
 
 # Networking: open a websocket to notify server about game events
@@ -155,11 +164,15 @@ while supervisor.step(timestep) != -1:
 
         # Reset: respawn flag and teleport robots back to initial spots after a tiny delay
         # pick next spawn point
-        last_spawn_index = (last_spawn_index + 1) % len(possible_points)
-        new_flag_pos = possible_points[last_spawn_index]
+        new_flag_pos = possible_points[np.random.randint(0, len(possible_points))]
 
         # set flag translation (keep small positive Z to sit above floor)
-        new_flag_pos_with_z = [new_flag_pos[0], new_flag_pos[1], new_flag_pos[2] if len(new_flag_pos)>=3 else 0.05]
+        new_flag_pos_with_z = [
+            new_flag_pos[0], 
+            new_flag_pos[1], 
+            new_flag_pos[2] if len(new_flag_pos) >= 3 else 0.05
+        ]
+        
         translation_field.setSFVec3f(new_flag_pos_with_z)
 
         # reset robots to initial pose
