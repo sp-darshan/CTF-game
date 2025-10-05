@@ -1,17 +1,19 @@
 // server.js
+const express = require('express');
 const http = require('http');
 const WebSocket = require('ws');
 
-const server = http.createServer((req, res) => {
-  res.writeHead(200);
-  res.end("WebSocket server for CTF Remote");
+const app = express();
+app.get('/', (req, res) => {
+  res.send("CTF Remote WebSocket Server is running ✅");
 });
 
+const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 
-let robots = {};     // robotId -> ws
-let clients = {};    // clientId -> ws
-let supervisors = {}; // optional
+let robots = {};       // robotId -> ws
+let clients = {};      // clientId -> ws
+let supervisors = {};  // supervisorId -> ws
 
 function broadcastToClients(msgObj) {
   const msg = JSON.stringify(msgObj);
@@ -23,7 +25,9 @@ function broadcastToClients(msgObj) {
   }
 }
 
-wss.on('connection', (ws) => {
+wss.on('connection', (ws, req) => {
+  console.log("🔗 New WebSocket connection from", req.socket.remoteAddress);
+
   ws.on('message', (raw) => {
     let data;
     try {
@@ -33,41 +37,44 @@ wss.on('connection', (ws) => {
       return;
     }
 
+    // Registration
     if (data.type === 'register') {
       if (data.role === 'robot') {
         robots[data.id] = ws;
-        console.log("Robot registered:", data.id);
+        console.log("🤖 Robot registered:", data.id);
       } else if (data.role === 'client') {
         clients[data.id] = ws;
-        console.log("Client registered:", data.id);
+        console.log("🧑‍💻 Client registered:", data.id);
       } else if (data.role === 'supervisor') {
         supervisors[data.id] = ws;
-        console.log("Supervisor registered:", data.id);
+        console.log("🧠 Supervisor registered:", data.id);
       }
       return;
     }
 
+    // Control signal
     if (data.type === 'control') {
-      // forward control to robot if connected
       if (robots[data.id] && robots[data.id].readyState === WebSocket.OPEN) {
-        robots[data.id].send(JSON.stringify({ type: 'control', vx: data.vx, wz: data.wz }));
+        robots[data.id].send(JSON.stringify({
+          type: 'control',
+          vx: data.vx,
+          wz: data.wz
+        }));
       }
       return;
     }
 
+    // Game event broadcast
     if (data.type === 'game_event') {
-      // received from supervisor - broadcast to all clients
-      console.log("Game event:", data);
+      console.log("🏁 Game event:", data);
       broadcastToClients(data);
       return;
     }
 
-    // pass-through for debug
     console.log("Unhandled message:", data);
   });
 
   ws.on('close', () => {
-    // remove from robots/clients/supervisors if matched
     for (const id in robots) if (robots[id] === ws) delete robots[id];
     for (const id in clients) if (clients[id] === ws) delete clients[id];
     for (const id in supervisors) if (supervisors[id] === ws) delete supervisors[id];
@@ -75,6 +82,6 @@ wss.on('connection', (ws) => {
 });
 
 const PORT = process.env.PORT || 8080;
-server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+server.listen(PORT, '0.0.0.0', () => {
+  console.log(`🚀 Server running on port ${PORT}`);
 });
