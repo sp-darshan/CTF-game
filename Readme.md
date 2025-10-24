@@ -71,18 +71,19 @@ ctf-game/
 ## Usage Instructions 
 
 1. Clone the Repository:
-```bash
-git clone https://github.com/sp-darshan/ctf-game.git 
-cd ctf-game 
-```
-2. Open the Simulation in Webots: 
-   • Launch Webots
-   • Open the file:
    ```bash
-   worlds/capture_the_flag.wbt
+   git clone https://github.com/sp-darshan/ctf-game.git 
+   cd ctf-game 
    ```
-   • Run the simulation
-   • The robots will automatically connect to the hosted backend. 
-3. Access the Frontend : 
-   • Visit the hosted frontend link above to monitor and interact with the live simulation.
+2. Open the Simulation in Webots:
+   - Launch Webots
+   - Open the file:
+     ```bash
+     worlds/capture_the_flag.wbt
+     ```
+   - Run the simulation
+   - The robots will automatically connect to the hosted backend.
+     
+3. Access the Frontend: 
+   - Visit the hosted frontend link above to monitor and interact with the live simulation.
 
