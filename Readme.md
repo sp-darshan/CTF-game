@@ -48,7 +48,7 @@ The system is organized as follows:
 ```plaintext
 ctf-game/
 │
-├── client/                # Optional web interface (if implemented)
+├── client/                # web interface 
 ├── controller/            # Webots robot controllers
 │   ├── flag_spawn_code.py # Flag placement and respawn logic
 │   ├── epuck1.py          # Robot 1 controller
