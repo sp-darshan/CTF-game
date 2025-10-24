@@ -42,14 +42,14 @@ EPUCK2_INIT_ROT = list(epuck2_rot_field.getSFRotation())
 
 # Example possible flag spawn points (replace with your maze-chosen points later)
 possible_points = [
-    [0.0, 0.0, 0.05],
-    [0.135, 0.135, 0.05],
-    [-0.4, 0.135, 0.05],
-    [0.2, -0.1, 0.05],
-    [-0.2, 0.2, 0.05]
+    [0.35, -0.1, 0.0],
+    [-0.3, +0.27, 0.0],
+    [-0.1, -0.6, 0.0]
 ]
 
 initial_flag_pos = possible_points[np.random.randint(0, len(possible_points))]
+print(initial_flag_pos)
+
 translation_field.setSFVec3f([
     initial_flag_pos[0],
     initial_flag_pos[1],

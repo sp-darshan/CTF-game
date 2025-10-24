@@ -10,8 +10,8 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/project
 WorldInfo {
 }
 Viewpoint {
-  orientation 0.5582845135718706 0.5562511161829551 -0.6155510520265858 2.04129128003872
-  position -0.33531295844358366 0.5296090467984085 5.778179639690095
+  orientation 0.5909179124096997 0.5807252809592954 -0.559976935996573 2.135413220995151
+  position -0.0012127769698532607 -0.2861876079562789 5.267025277687869
 }
 TexturedBackground {
 }
@@ -233,10 +233,10 @@ Wall {
   }
 }
 Wall {
-  translation -0.203695 0.0950743 -1.73195e-14
+  translation -0.243695 0.095074 -1.73195e-14
   rotation 0 0 -1 -5.307179586466759e-06
   name "wall(55)"
-  size 0.51 0.01 0.1
+  size 0.35 0.01 0.1
   appearance Appearance {
     material Material {
       ambientIntensity 0
@@ -377,7 +377,7 @@ Wall {
   }
 }
 Wall {
-  translation 0.0457578 0.268207 4.6032e-09
+  translation 0.175758 0.268207 4.6032e-09
   rotation -9.58979e-09 9.58976e-09 -1 -1.5707953071795862
   name "wall(14)"
   size 0.135 0.01 0.1
@@ -524,18 +524,6 @@ Wall {
   translation 0.235098 0.0844034 3.83594e-09
   rotation 1.5023e-14 -9.58977e-09 1 3.14159
   name "wall(18)"
-  size 0.135 0.01 0.1
-  appearance Appearance {
-    material Material {
-      ambientIntensity 0
-      diffuseColor 0 0 0
-    }
-  }
-}
-Wall {
-  translation 0.11508 0.32627 3.83594e-09
-  rotation 1.5023e-14 -9.58977e-09 1 3.14159
-  name "wall(20)"
   size 0.135 0.01 0.1
   appearance Appearance {
     material Material {
@@ -737,10 +725,10 @@ Wall {
   }
 }
 Wall {
-  translation 0.478297 0.32189 5.37036e-09
+  translation 0.498297 0.32189 5.37036e-09
   rotation -1.5115e-14 9.58977e-09 -1 -3.1415853071795863
   name "wall(29)"
-  size 0.144 0.01 0.1
+  size 0.102 0.01 0.1
   appearance Appearance {
     material Material {
       ambientIntensity 0
@@ -773,7 +761,7 @@ Wall {
   }
 }
 RectangleArena {
-  translation -0.0122046 0.00955448 6.66134e-15
+  translation -0.00206275 0.00737853 0
   floorSize 1.5 1.5
   floorTileSize 1.5 1.5
   floorAppearance NULL
@@ -783,27 +771,27 @@ RectangleArena {
     }
   }
 }
-E-puck {
-  hidden position_0_0 668.3215136867592
-  hidden position_0_1 630.2582644966894
-  hidden rotation_1 0 1 0 2.2695493783268224
-  hidden rotation_2 0 1 0 3.5078670384876784
-  translation 0.5421510000435461 -0.5492730003036475 -6.396199576740036e-05
-  rotation -1.9224865562537106e-09 -2.031018465011479e-11 0.9999999999999999 1.712608573807691
+DEF EPUCK1 E-puck {
+  hidden translation_1 0 0.026 0.02
+  hidden rotation_1 0 1 0 2.9802322387695313e-08
+  hidden translation_2 0 -0.026 0.02
+  hidden rotation_2 0 -1 0 2.9802322387695313e-08
+  translation 0.5421510000435947 -0.5492730003036495 -6.396199578843909e-05
+  rotation 1.0595843467969415e-09 1.2215992778871325e-09 1 1.7126085738078147
   name "e-puck(1)"
   controller "epuck1_controller"
 }
-E-puck {
-  hidden position_0_0 717.4650187939585
-  hidden position_0_1 731.2467883204343
-  hidden rotation_1 0 -1 0 4.627060412226676
-  hidden rotation_2 0 -1 0 5.025421753055296
-  translation -0.5789280000035326 0.5178270000424688 -6.396199576667004e-05
-  rotation 1.4812424433501657e-10 -1.358102286428648e-10 -1 1.487232380235147
+DEF EPUCK2 E-puck {
+  hidden translation_1 0 0.026 0.02
+  hidden rotation_1 0 1 0 2.9802322387695313e-08
+  hidden translation_2 0 -0.026 0.02
+  hidden rotation_2 0 1 0 2.9802322387695313e-08
+  translation -0.409523 0.532021 -6.39619e-05
+  rotation 1.3282e-09 -1.22159e-09 -1 1.48724
   controller "epuck2_controller"
 }
 DEF FLAG Solid {
-  translation -0.03 0 0.05
+  translation 0.35 -0.1 0
   children [
     Shape {
       appearance Appearance {
